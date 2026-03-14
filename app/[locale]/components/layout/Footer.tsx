@@ -17,8 +17,6 @@ interface FooterProps {
       phone: string;
       social: string;
       copyright: string;
-      privacy: string;
-      terms: string;
     };
     nav: {
       home: string;
@@ -37,8 +35,6 @@ export default function Footer({ locale, dictionary }: FooterProps) {
     phone: contactInfo.phoneFormatted,
     social: locale === 'hr' ? 'Društvene mreže' : 'Social Media',
     copyright: `© ${currentYear} ${siteConfig.name}. ${locale === 'hr' ? 'Sva prava pridržana.' : 'All rights reserved.'}`,
-    privacy: locale === 'hr' ? 'Privatnost' : 'Privacy',
-    terms: locale === 'hr' ? 'Uvjeti korištenja' : 'Terms of Service',
   };
 
   return (
@@ -114,7 +110,7 @@ export default function Footer({ locale, dictionary }: FooterProps) {
             </ul>
           </div>
 
-          {/* Social & Legal */}
+          {/* Social */}
           <div>
             <h4 className="text-lg font-semibold mb-4">{footerDict.social}</h4>
             <div className="space-y-3 mb-6">
@@ -142,21 +138,6 @@ export default function Footer({ locale, dictionary }: FooterProps) {
               </motion.a>
             </div>
 
-            <h4 className="text-lg font-semibold mb-4">
-              {locale === 'hr' ? 'Pravne informacije' : 'Legal Information'}
-            </h4>
-            <ul className="space-y-3">
-              <li>
-                <Link href={`/${locale}/privacy`} className="text-gray-300 hover:text-coastal-400 transition-colors duration-200 block py-2 min-h-[44px] flex items-center">
-                  {footerDict.privacy}
-                </Link>
-              </li>
-              <li>
-                <Link href={`/${locale}/terms`} className="text-gray-300 hover:text-coastal-400 transition-colors duration-200 block py-2 min-h-[44px] flex items-center">
-                  {footerDict.terms}
-                </Link>
-              </li>
-            </ul>
           </div>
         </div>
 

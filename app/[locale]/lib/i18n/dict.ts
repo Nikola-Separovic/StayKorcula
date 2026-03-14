@@ -150,9 +150,7 @@ export const dictionaries = {
       email: 'staykorcula@gmail.com',
       phone: '+385 95 822 3830',
       social: 'Društvene mreže',
-      copyright: '© 2024 Villa Aquamare. Sva prava pridržana.',
-      privacy: 'Privatnost',
-      terms: 'Uvjeti korištenja',
+      copyright: '© 2026 StayKorčula. Sva prava pridržana.',
     },
     
     // Common
@@ -527,9 +525,7 @@ export const dictionaries = {
       email: 'staykorcula@gmail.com',
       phone: '+385 95 822 3830',
       social: 'Social Media',
-      copyright: '© 2024 Villa Aquamare. All rights reserved.',
-      privacy: 'Privacy',
-      terms: 'Terms of Service',
+      copyright: '© 2026 StayKorčula. All rights reserved.',
     },
     
     // Common
