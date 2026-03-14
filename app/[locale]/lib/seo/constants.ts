@@ -16,6 +16,15 @@ export const DEFAULT_OG_IMAGE = {
   },
 } as const;
 
+/** Page-specific OG images for optimal social sharing per route */
+export const PAGE_OG_IMAGES = {
+  home: '/images/korcula.jpg',
+  accommodations: '/images/dron.jpg',
+  'villa-aquamare': '/images/dron.jpg',
+  'villa-prigradica-paradise': '/images/PRIGRADICA/prigradica1.jpg',
+  'holiday-house-kata-babina': '/images/BABINA/babina20.jpg',
+} as const;
+
 /** Title template - {page} | {site} for consistency */
 export const TITLE_TEMPLATE = {
   default: `%s | ${siteConfig.name}`,

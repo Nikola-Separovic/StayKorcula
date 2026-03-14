@@ -4,10 +4,23 @@ import type { Locale } from '../i18n/i18n';
 import { siteConfig } from '../../data/config';
 import { contactInfo } from '../../data/contact';
 import { generateMetadata as generateSEOMetadata } from '../seo';
+import { PAGE_OG_IMAGES } from '../seo/constants';
+
+/** Property-specific OG images for optimal social sharing */
+const PROPERTY_OG_IMAGE_MAP: Record<string, string> = {
+  'villa-aquamare': PAGE_OG_IMAGES['villa-aquamare'],
+  'villa-prigradica-paradise': PAGE_OG_IMAGES['villa-prigradica-paradise'],
+  'holiday-house-kata-babina': PAGE_OG_IMAGES['holiday-house-kata-babina'],
+};
 
 export function generatePropertyMetadata(property: Property, locale: Locale): Metadata {
   const propertyName = typeof property.name === 'string' ? property.name : property.name[locale];
   const propertyNameLower = propertyName.toLowerCase();
+  const ogImage =
+    PROPERTY_OG_IMAGE_MAP[property.slug] ??
+    ((property.mainImage || property.heroImage).startsWith('http')
+      ? undefined
+      : (property.mainImage || property.heroImage));
 
   return generateSEOMetadata({
     locale,
@@ -15,10 +28,10 @@ export function generatePropertyMetadata(property: Property, locale: Locale): Me
     description: property.shortDescription[locale],
     keywords:
       locale === 'hr'
-        ? `${propertyNameLower}, korčula, vela luka, hrvatska, smještaj, vila, apartman`
-        : `${propertyNameLower}, korcula, vela luka, croatia, accommodation, villa, apartment`,
+        ? `${propertyNameLower}, korčula, vela luka, hrvatska, smještaj, vila, apartman, StayKorčula`
+        : `${propertyNameLower}, korcula, vela luka, croatia, accommodation, villa, apartment, StayKorcula`,
     path: `accommodations/${property.slug}`,
-    image: (property.mainImage || property.heroImage).startsWith('http') ? undefined : (property.mainImage || property.heroImage),
+    image: ogImage,
     imageAlt: propertyName,
   });
 }

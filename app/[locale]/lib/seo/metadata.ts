@@ -16,17 +16,19 @@ import {
   DEFAULT_OG_IMAGE,
   DEFAULT_ROBOTS,
   FORMAT_DETECTION,
-  TITLE_TEMPLATE,
+  PAGE_OG_IMAGES,
 } from './constants';
 import type { PageSEOConfig } from './types';
 
 /** Base metadata applied to all pages */
 const BASE_METADATA: Partial<Metadata> = {
   metadataBase: new URL(siteConfig.url),
-  authors: [{ name: siteConfig.name }],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   publisher: siteConfig.name,
   formatDetection: FORMAT_DETECTION,
+  category: 'travel',
 };
 
 /**
@@ -107,22 +109,24 @@ export function generateMetadata(config: {
 
 /**
  * Generate homepage metadata
+ * Uses korcula.jpg aerial view of Korčula old town for OG/Twitter
  */
 export function generateHomeMetadata(locale: Locale): Metadata {
   const isCroatian = locale === 'hr';
   const base = generateMetadata({
     locale,
-    title: siteConfig.name, // placeholder, overridden below
+    title: siteConfig.name,
     description: siteConfig.description[locale],
     keywords: isCroatian
-      ? 'smještaj, korčula, vela luka, hrvatska, vile, apartmani, odmor, mediteran'
-      : 'accommodation, korcula, vela luka, croatia, villas, apartments, vacation, mediterranean',
+      ? 'smještaj Korčula, vela luka, hrvatska, vile, apartmani, odmor, mediteran, otok Korčula, Jadransko more'
+      : 'accommodation Korcula, vela luka, croatia, villas, apartments, vacation, mediterranean, Korcula island, Adriatic sea',
     path: '',
-    image: DEFAULT_OG_IMAGE.path,
-    imageAlt: isCroatian ? `${siteConfig.name} - Pogled na more` : `${siteConfig.name} - Sea view`,
+    image: PAGE_OG_IMAGES.home,
+    imageAlt: isCroatian
+      ? `${siteConfig.name} - Pogled na staru grad Korčulu i Jadransko more`
+      : `${siteConfig.name} - Aerial view of Korčula old town and Adriatic Sea`,
   });
 
-  // Use absolute title to avoid "StayKorčula | StayKorčula" from root layout template
   return {
     ...base,
     title: { absolute: siteConfig.name },
@@ -130,43 +134,56 @@ export function generateHomeMetadata(locale: Locale): Metadata {
 }
 
 /**
+ * Generate metadata for accommodations listing page
+ * Presents our accommodations and StayKorčula — uses dron.jpg aerial coastal view
+ */
+export function generateAccommodationsMetadata(locale: Locale): Metadata {
+  const isCroatian = locale === 'hr';
+  return generateMetadata({
+    locale,
+    title: isCroatian ? `Smještaj | ${siteConfig.name}` : `Accommodations | ${siteConfig.name}`,
+    description: isCroatian
+      ? 'Upoznajte naše smještaje i nas. StayKorčula nudi moderne vile i apartmane uz more na otoku Korčuli — Villa Aquamare, Villa Prigradica Paradise i Holiday House Kata Babina. Rezervirajte direktno po najboljoj cijeni.'
+      : 'Discover our accommodations and who we are. StayKorčula offers modern villas and apartments by the sea on Korčula island — Villa Aquamare, Villa Prigradica Paradise, and Holiday House Kata Babina. Book direct for the best rate.',
+    keywords: isCroatian
+      ? 'smještaj Korčula, StayKorčula, vila Aquamare, vila Prigradica, Kata Babina, vela luka, apartmani, hrvatska'
+      : 'accommodation Korcula, StayKorcula, Villa Aquamare, Villa Prigradica, Kata Babina, vela luka, apartments, croatia',
+    path: 'accommodations',
+    image: PAGE_OG_IMAGES.accommodations,
+    imageAlt: isCroatian
+      ? `${siteConfig.name} - Naši smještaji uz Jadransko more na Korčuli`
+      : `${siteConfig.name} - Our accommodations by the Adriatic Sea on Korčula`,
+  });
+}
+
+/**
+ * Generate metadata for services listing page
+ */
+export function generateServicesMetadata(locale: Locale): Metadata {
+  const isCroatian = locale === 'hr';
+  return generateMetadata({
+    locale,
+    title: isCroatian ? `Usluge | ${siteConfig.name}` : `Services | ${siteConfig.name}`,
+    description: isCroatian
+      ? 'Otkrijte naše usluge: iznajmljivanje čamaca, transferi, taxi usluge i više. Sve što trebate za kompletan odmor na Korčuli.'
+      : 'Discover our services: boat rentals, transfers, taxi services and more. Everything you need for a complete vacation on Korčula.',
+    keywords: isCroatian
+      ? 'usluge, korčula, iznajmljivanje čamaca, transfer, taxi, hrvatska'
+      : 'services, korcula, boat rental, transfer, taxi, croatia',
+    path: 'services',
+    image: DEFAULT_OG_IMAGE.path,
+  });
+}
+
+/**
  * Generate metadata for listing pages (accommodations, services)
+ * @deprecated Use generateAccommodationsMetadata or generateServicesMetadata for page-specific images
  */
 export function generateListingMetadata(
   locale: Locale,
   type: 'accommodations' | 'services'
 ): Metadata {
-  const isCroatian = locale === 'hr';
-  const paths = {
-    accommodations: { path: 'accommodations', title: isCroatian ? 'Smještaj' : 'Accommodations' },
-    services: { path: 'services', title: isCroatian ? 'Usluge' : 'Services' },
-  };
-  const { path, title } = paths[type];
-
-  const descriptions = {
-    accommodations: isCroatian
-      ? 'Odaberite savršenu opciju za vaš odmor. Moderne vile i apartmani uz more u Veloj Luci na otoku Korčuli.'
-      : 'Choose the perfect option for your stay. Modern villas and apartments by the sea in Vela Luka, Korčula.',
-    services: isCroatian
-      ? 'Otkrijte naše usluge: iznajmljivanje čamaca, transferi, taxi usluge i više. Sve što trebate za kompletan odmor na Korčuli.'
-      : 'Discover our services: boat rentals, transfers, taxi services and more. Everything you need for a complete vacation on Korčula.',
-  };
-
-  const keywords = {
-    accommodations: isCroatian
-      ? 'smještaj, korčula, vela luka, vile, apartmani, hrvatska'
-      : 'accommodation, korcula, vela luka, villas, apartments, croatia',
-    services: isCroatian
-      ? 'usluge, korčula, iznajmljivanje čamaca, transfer, taxi, hrvatska'
-      : 'services, korcula, boat rental, transfer, taxi, croatia',
-  };
-
-  return generateMetadata({
-    locale,
-    title: `${title} | ${siteConfig.name}`,
-    description: descriptions[type],
-    keywords: keywords[type],
-    path,
-    image: DEFAULT_OG_IMAGE.path,
-  });
+  return type === 'accommodations'
+    ? generateAccommodationsMetadata(locale)
+    : generateServicesMetadata(locale);
 }

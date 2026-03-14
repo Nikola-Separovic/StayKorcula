@@ -12,6 +12,8 @@ export {
   generateMetadata,
   generateHomeMetadata,
   generateListingMetadata,
+  generateAccommodationsMetadata,
+  generateServicesMetadata,
 } from './metadata';
 
 export {
