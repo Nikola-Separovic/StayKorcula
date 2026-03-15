@@ -13,7 +13,7 @@ export const siteConfig = {
     hr: 'Moderne vile i apartmani uz more na otoku Korčuli. Rezervirajte direktno po najboljoj cijeni.',
     en: 'Modern villas and apartments by the sea on island of Korčula, Croatia. Book direct for the best rate.',
   },
-  url: 'https://staykorcula-beryl.vercel.app',
+  url: 'https://staykorcula.vercel.app',
   logo: '/images/logo.png',
   defaultLocale: 'hr' as const,
   locales: ['hr', 'en'] as const,
