@@ -163,7 +163,7 @@ export default function Location({ property, locale, dictionary }: LocationProps
             </div>
 
             {/* Local Transport */}
-            <div className="bg-white rounded-xl p-6 shadow-lg">
+            <div className="bg-white rounded-xl  p-6 shadow-lg">
               <div className="flex items-start space-x-4">
                 <div className="w-12 h-12 bg-coastal-100 rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-2xl">🚗</span>
